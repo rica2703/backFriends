@@ -73,7 +73,7 @@ isModerator = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "Mesero") {
             next();
             return;
           }
