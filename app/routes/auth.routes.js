@@ -1,4 +1,5 @@
 const { verifySignUp } = require("../middlewares");
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 
 module.exports = function(app) {
@@ -18,14 +19,16 @@ module.exports = function(app) {
     ],
     controller.signup
   );
-  app.get("/api/auth/users",controller.getAllUsers);
-  app.post("/api/auth/signin", controller.signin);
-  app.post("/api/auth/crearproducto",controller.createProduct);
-  app.get("/api/auth/productos",controller.getAllProducts);
+  app.get("/api/auth/users",[authJwt.verifyToken],controller.getAllUsers);
+  app.post("/api/auth/signin",controller.signin);
+  app.post("/api/auth/crearproducto",[authJwt.verifyToken],controller.createProduct);
+  app.delete("/api/auth/eliminarproducto/:id", [authJwt.verifyToken], controller.eliminarProducto);
+  app.get("/api/auth/productos",controller.getAllProducts); //no lo protegi por cuestiones de que necesito ver el id para hacer pruebas de demostracion del delete
   app.post("/api/auth/crearsugerencia",controller.crearSugerencia);
-  app.get("/api/auth/sugerencias",controller.getAllSugerencias);
-  app.post("/api/auth/crearPedido",controller.crearPedido);
-  app.get("/api/auth/pedidos",controller.getAllPedidos);
-  app.post("/api/auth/crearreporte",controller.crearReporte);
-  app.get("/api/auth/reporte",controller.getAllReportes);
+  app.get("/api/auth/sugerencias",[authJwt.verifyToken],controller.getAllSugerencias);
+  app.post("/api/auth/crearPedido",[authJwt.verifyToken],controller.crearPedido);
+  app.put("/api/auth/editarpedido/:id", [authJwt.verifyToken], controller.editarPedido);
+  app.get("/api/auth/pedidos",controller.getAllPedidos);//no lo protegi por cuestiones de que necesito ver el id para hacer pruebas de demostracion del put
+  app.post("/api/auth/crearreporte",[authJwt.verifyToken],controller.crearReporte);
+  app.get("/api/auth/reporte",[authJwt.verifyToken],controller.getAllReportes);
 };
