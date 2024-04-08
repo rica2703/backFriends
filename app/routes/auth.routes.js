@@ -2,6 +2,18 @@ const { verifySignUp } = require("../middlewares");
 const { authJwt } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 
+//limitar peticiones 
+// const express=require("express");
+// const rateLimit=require("express-rate-limit");
+// const app=express();
+// const accountLimiter=rateLimit({
+// windowMs:60*60*1000,
+// max:6,
+// message:"Demasiadas peticiones intenta en 1 hora"
+// });
+// app.post("/api/auth/signin",accountLimiter,(req,res)=>{controller.signin});
+// app.listen(8080,()=>console.log(`app ejecutando en puerto 8080 peticiones maximas`));
+
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
