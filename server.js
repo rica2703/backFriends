@@ -21,9 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Limitar peticiones de la API
 const accountLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 1 hora
-  max: 3, // 6 peticiones por hora
-  message: "Demasiadas peticiones intenta en 10 minutos"
+  windowMs: 5 * 60 * 1000, // 5 minutos
+  max: 100, // 50 peticiones en 5 minutos
+  message: "Demasiadas peticiones, intenta nuevamente en 5 minutos"
 });
 app.use("/api/auth/signin", accountLimiter);
 app.use("/api/auth/crearsugerencia",accountLimiter);
