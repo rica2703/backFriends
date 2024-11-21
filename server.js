@@ -3,7 +3,6 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const dbConfig = require("./app/config/db.config");
 const db = require("./app/models");
-const Role = db.role;
 
 const app = express();
 
@@ -11,7 +10,7 @@ const app = express();
 var corsOptions = {
   origin: "http://localhost:8081"
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -26,14 +25,14 @@ const accountLimiter = rateLimit({
   message: "Demasiadas peticiones, intenta nuevamente en 5 minutos"
 });
 app.use("/api/auth/signin", accountLimiter);
-app.use("/api/auth/crearsugerencia",accountLimiter);
-app.use("/api/auth/crearsugerencia", accountLimiter);
+// app.use("/api/auth/crearsugerencia",accountLimiter);
+// app.use("/api/auth/crearsugerencia", accountLimiter);
 app.use("/api/auth/signup", accountLimiter);
-app.use("/api/auth/crearproducto", accountLimiter);
-app.use("/api/auth/eliminarproducto/:id", accountLimiter);
-app.use("/api/auth/crearPedido", accountLimiter);
-app.use("/api/auth/editarpedido/:id", accountLimiter);
-app.use("/api/auth/crearreporte", accountLimiter);
+// app.use("/api/auth/crearproducto", accountLimiter);
+// app.use("/api/auth/eliminarproducto/:id", accountLimiter);
+// app.use("/api/auth/crearPedido", accountLimiter);
+// app.use("/api/auth/editarpedido/:id", accountLimiter);
+// app.use("/api/auth/crearreporte", accountLimiter);
 
 
 
@@ -70,34 +69,34 @@ app.listen(PORT, () => {
 
 // Función para inicializar roles en la base de datos
 function initial() {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "cocina"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-        console.log("added 'user' to roles collection");
-      });
+  // Role.estimatedDocumentCount((err, count) => {
+  //   if (!err && count === 0) {
+  //     new Role({
+  //       name: "cocina"
+  //     }).save(err => {
+  //       if (err) {
+  //         console.log("error", err);
+  //       }
+  //       console.log("added 'user' to roles collection");
+  //     });
 
-      new Role({
-        name: "Mesero"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-        console.log("added 'moderator' to roles collection");
-      });
+  //     new Role({
+  //       name: "Mesero"
+  //     }).save(err => {
+  //       if (err) {
+  //         console.log("error", err);
+  //       }
+  //       console.log("added 'moderator' to roles collection");
+  //     });
 
-      new Role({
-        name: "admin"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-        console.log("added 'admin' to roles collection");
-      });
-    }
-  });
+  //     new Role({
+  //       name: "admin"
+  //     }).save(err => {
+  //       if (err) {
+  //         console.log("error", err);
+  //       }
+  //       console.log("added 'admin' to roles collection");
+  //     });
+  //   }
+  // });
 }
